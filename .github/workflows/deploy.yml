@@ -24,12 +24,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
-      - name: Decode ZIP files
-        run: |
-          if [ -f public/critical.zip.b64 ]; then base64 -d public/critical.zip.b64 > public/critical.zip; fi
-          if [ -f public/essentials.zip.b64 ]; then base64 -d public/essentials.zip.b64 > public/essentials.zip; fi
-          if [ -f public/secondary.zip.b64 ]; then base64 -d public/secondary.zip.b64 > public/secondary.zip; fi
-      
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:

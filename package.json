@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predev": "node decode-assets.js",
     "dev": "vite",
+    "prebuild": "node decode-assets.js",
     "build": "vite build",
     "preview": "vite preview"
   },
