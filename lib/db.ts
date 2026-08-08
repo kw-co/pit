@@ -1,4 +1,4 @@
-import { openDB, DBSchema, IDBPDatabase } from 'https://esm.sh/idb@8.0.0';
+import { openDB, DBSchema, IDBPDatabase } from 'idb';
 
 const DB_NAME = 'AnimalWorldDB';
 const FILE_STORE = 'fileStore';

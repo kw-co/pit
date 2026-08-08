@@ -5,7 +5,7 @@
 
 
 import React, { useEffect, useCallback } from 'react';
-import JSZip from 'https://esm.sh/jszip@3.10.1';
+import JSZip from 'jszip';
 import { useLanguage } from '../contexts/LanguageContext';
 import { saveFile, saveMetadata } from '../lib/db';
 import { useAssetStatus, PackageName } from '../contexts/AssetStatusContext';
@@ -65,7 +65,7 @@ const AssetLoader: React.FC = () => {
 
     } catch (error: any) {
       if (error.name === 'AbortError') return null;
-      // console.warn(`Mocking zip download for ${pkg.name} due to error:`, error);
+      console.warn(`Mocking zip download for ${pkg.name} due to error:`, error);
       setPackageProgress(pkg.name, 100);
       return { name: pkg.name, blob: null };
     }
@@ -100,17 +100,18 @@ const AssetLoader: React.FC = () => {
 
           // Step 2: Unified Installation
           let zips: any[] = [];
+          let successfullyParsedNames: string[] = [];
           if (blobsToInstall.length > 0) {
             const zipPromises = blobsToInstall.map(async ({name, blob}) => {
                 try {
-                    return await (JSZip as any).loadAsync(blob);
+                    const z = await JSZip.loadAsync(blob); return { name, zip: z };
                 } catch (e) {
-                    // console.error(`Failed to parse zip for ${name}:`, e);
+                    console.error(`Failed to parse zip for ${name}:`, e);
                     return null;
                 }
             });
             const loadedZips = await Promise.all(zipPromises);
-            zips = loadedZips.filter(z => z !== null);
+            const validZips = loadedZips.filter(z => z !== null); zips = validZips.map(v => v.zip); successfullyParsedNames = validZips.map(v => v.name);
           }
           const allFilesToInstall = zips.flatMap((zip: any) => Object.values(zip.files).filter((file: any) => !file.dir));
           const totalFiles = allFilesToInstall.length;
@@ -133,15 +134,15 @@ const AssetLoader: React.FC = () => {
           console.log("All files installed successfully.");
 
           // Step 3: Finalize status
-          for (const {name} of blobsToInstall) {
+          for (const name of successfullyParsedNames) {
             await saveMetadata(`pkg_loaded_${name}`, true);
             setPackageStatus(name, 'loaded');
           }
-          setInstallationComplete(true);
+          if (!successfullyParsedNames.includes("critical")) { throw new Error("Critical assets failed to load"); } else { setInstallationComplete(true); }
 
         } catch (error: any) {
             if (error.name !== 'AbortError') {
-                // console.error("An error occurred during the installation phase:", error);
+                console.error("An error occurred during the installation phase:", error);
                 setErrorMessage(t.loader.fetchError);
                 setPackageStatus('critical', 'error');
             }
