@@ -1,0 +1,437 @@
+
+
+body {
+  font-family: 'Fredoka', sans-serif;
+}
+@keyframes pulse-slow {
+  50% {
+    transform: scale(1.05);
+  }
+}
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+@keyframes fade-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-fade-in {
+  animation: fade-in 0.7s ease-in-out forwards;
+}
+@keyframes dot-bounce {
+  0%, 80%, 100% { 
+    transform: scale(0);
+  } 40% { 
+    transform: scale(1.0);
+  }
+}
+.animate-dot-bounce {
+  animation: dot-bounce 1.4s infinite ease-in-out both;
+}
+@keyframes gentle-wiggle {
+  0%, 100% {
+      transform: rotate(-2deg) scale(1.03);
+  }
+  50% {
+      transform: rotate(2deg) scale(1.03);
+  }
+}
+.animate-gentle-wiggle {
+  animation: gentle-wiggle 0.4s ease-in-out infinite;
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+.animate-shake {
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+/* New Sunny Hills Theme Styles */
+.sunny-hills-bg {
+  background: linear-gradient(to bottom, #87CEEB, #B0E0E6);
+  position: relative;
+  overflow: hidden;
+}
+
+/* New Orbiting Mascot Animations */
+@keyframes orbit-cw {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+.animate-orbit-cw {
+  animation: orbit-cw 30s linear infinite;
+}
+
+@keyframes orbit-ccw {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+.animate-orbit-ccw {
+  animation: orbit-ccw 30s linear infinite;
+}
+
+/* New Bubble Pop Animation */
+@keyframes bubble-pop {
+  from {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -40vh) scale(1.2);
+    opacity: 0;
+  }
+}
+.animate-bubble-pop {
+  animation: bubble-pop 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  pointer-events: none;
+}
+
+.welcome-title {
+  font-family: 'Pacifico', cursive;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+}
+
+.sun {
+  position: absolute;
+  top: 5%;
+  left: 10%;
+  width: 90px;
+  height: 90px;
+  background: #FFD700;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.7), 0 0 40px rgba(255, 165, 0, 0.5);
+  animation: pulse-sun 6s infinite ease-in-out;
+  z-index: 1;
+}
+
+@keyframes pulse-sun {
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.9), 0 0 60px rgba(255, 165, 0, 0.7);
+  }
+}
+
+.clouds {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.cloud-group {
+    position: absolute;
+    left: -250px; /* start off-screen */
+    animation-name: drift;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes drift {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(100vw + 250px)); }
+}
+
+.cloud {
+    width: 200px;
+    height: 60px;
+    background: white;
+    border-radius: 60px;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    opacity: 0.9;
+}
+.cloud:before, .cloud:after {
+    content: '';
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+}
+.cloud:before {
+    width: 80px;
+    height: 80px;
+    top: -40px;
+    left: 40px;
+}
+.cloud:after {
+    width: 100px;
+    height: 100px;
+    top: -50px;
+    right: 20px;
+}
+
+.hills {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 35%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.hill1, .hill2 {
+  position: absolute;
+  bottom: 0;
+  border-radius: 50% 50% 0 0;
+  width: 150%;
+}
+.hill1 {
+  background: linear-gradient(to top, #228B22, #3CB371);
+  height: 100%;
+  left: -30%;
+}
+.hill2 {
+  background: linear-gradient(to top, #3CB371, #98FB98);
+  height: 80%;
+  right: -25%;
+  opacity: 0.9;
+}
+
+/* New Cloud Button Styles */
+.cloud-button {
+  background: white;
+  border-radius: 60% 40% 30% 70% / 60% 50% 50% 40%;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), inset 0 -3px 5px rgba(0,0,0,0.05);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: none;
+  cursor: pointer;
+  aspect-ratio: 1.5 / 1;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  font-weight: 700;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cloud-button:hover, .cloud-button:focus {
+  transform: scale(1.07) translateY(-5px) rotate(-3deg);
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.15), inset 0 -3px 5px rgba(0,0,0,0.05);
+  border-radius: 40% 60% 70% 30% / 50% 60% 40% 50%;
+  outline: none;
+}
+
+/* Paw Print Button Styles */
+.paw-print-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem; /* Space between paw and label */
+  font-family: 'Fredoka', sans-serif;
+  transition: transform 0.2s ease-out;
+  -webkit-tap-highlight-color: transparent;
+}
+.paw-print-button:hover {
+  transform: scale(1.08);
+}
+.paw-print-shape {
+  position: relative;
+  width: 140px;
+  height: 120px;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.paw-print-button:active .paw-print-shape {
+  transform: scale(0.92); /* "pressed" effect */
+}
+.main-pad {
+  position: absolute;
+  width: 75px;
+  height: 65px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 45% 45% 60% 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 -5px 10px rgba(0,0,0,0.1);
+}
+.toe {
+  position: absolute;
+  width: 38px;
+  height: 42px;
+  border-radius: 50%;
+  box-shadow: inset 0 -3px 5px rgba(0,0,0,0.1);
+}
+.toe.t1 {
+  top: 20px;
+  left: 10px;
+  transform: rotate(-15deg);
+}
+.toe.t2 {
+  top: 0px;
+  left: 45px;
+}
+.toe.t3 {
+  top: 0px;
+  right: 45px;
+}
+.toe.t4 {
+  top: 20px;
+  right: 10px;
+  transform: rotate(15deg);
+}
+.paw-blue .main-pad, .paw-blue .toe { background-color: #60a5fa; } /* blue-400 */
+.paw-green .main-pad, .paw-green .toe { background-color: #4ade80; } /* green-400 */
+.paw-orange .main-pad, .paw-orange .toe { background-color: #fb923c; } /* orange-400 */
+.paw-pink .main-pad, .paw-pink .toe { background-color: #f472b6; } /* pink-400 */
+.paw-purple .main-pad, .paw-purple .toe { background-color: #a78bfa; } /* violet-400 */
+.paw-yellow .main-pad, .paw-yellow .toe { background-color: #facc15; } /* yellow-400 */
+.paw-red .main-pad, .paw-red .toe { background-color: #f87171; } /* red-400 */
+.paw-teal .main-pad, .paw-teal .toe { background-color: #2dd4bf; } /* teal-400 */
+
+.paw-print-label {
+  color: #374151; /* gray-700 */
+  font-weight: 600;
+  text-align: center;
+  font-size: 1.1rem;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+}
+@media (min-width: 768px) {
+  .paw-print-label {
+      font-size: 1.25rem;
+  }
+}
+
+
+/* Memory Game Card Flip */
+.card-container {
+  perspective: 1000px;
+}
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+.card-container.is-flipped .card-inner {
+  transform: rotateY(180deg);
+}
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 1rem; /* 16px */
+  overflow: hidden;
+}
+.card-back {
+  transform: rotateY(180deg);
+}
+
+/* Tic-Tac-Toe Styles */
+.xo-cell {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 1rem; /* 16px */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease-in-out;
+}
+.xo-cell-content {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0.5rem;
+}
+.xo-cell-mark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 0 8px rgba(0,0,0,0.4);
+}
+.xo-cell-mark-x {
+  color: #ef4444; /* red-500 */
+}
+.xo-cell-mark-o {
+  color: #3b82f6; /* blue-500 */
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+.animate-wiggle {
+  animation: wiggle 0.2s ease-in-out 4; /* Wiggle quickly 4 times */
+}
+
+/* Sound Chain Game Hint Bubble */
+@keyframes bounce-and-pop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  40% {
+    transform: scale(0.9);
+  }
+  60% {
+    transform: scale(1.05);
+  }
+  80% {
+    transform: scale(1);
+  }
+  90% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.hint-bubble {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background-color: rgba(255, 235, 59, 0.85); /* Yellow, semi-transparent */
+  border-radius: 50%;
+  border: 3px solid white;
+  color: #424242;
+  font-size: 3rem; /* 48px */
+  font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25), inset 0 0 12px rgba(255,255,255,0.6);
+  animation: bounce-and-pop 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@media (max-width: 640px) {
+  .hint-bubble {
+    width: 60px;
+    height: 60px;
+    font-size: 2.25rem;
+  }
+}
+
+/* Star Award Animation */
+@keyframes star-celebration {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.2) rotate(-15deg); opacity: 1; }
+  100% { transform: scale(0.8) rotate(10deg) translateY(20px); opacity: 0; }
+}
+.animate-star-celebration {
+  animation: star-celebration 1.5s ease-out forwards;
+}
