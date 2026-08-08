@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const assetsDir = path.join(process.cwd(), 'assets_b64');
+const chunksDir = path.join(process.cwd(), 'assets_chunks');
 const publicDir = path.join(process.cwd(), 'public');
 
 if (!fs.existsSync(publicDir)) {
@@ -9,15 +9,22 @@ if (!fs.existsSync(publicDir)) {
 }
 
 ['critical', 'essentials', 'secondary'].forEach(name => {
-  const b64Path = path.join(assetsDir, `${name}.zip.b64`);
   const zipPath = path.join(publicDir, `${name}.zip`);
-
-  if (fs.existsSync(b64Path)) {
-    const b64Data = fs.readFileSync(b64Path, 'utf8');
-    const binaryData = Buffer.from(b64Data, 'base64');
-    fs.writeFileSync(zipPath, binaryData);
-    console.log(`Decoded ${name}.zip`);
+  let b64Data = '';
+  
+  if (fs.existsSync(chunksDir)) {
+    const files = fs.readdirSync(chunksDir).filter(f => f.startsWith(`${name}_`)).sort();
+    if (files.length > 0) {
+      files.forEach(file => {
+        b64Data += fs.readFileSync(path.join(chunksDir, file), 'utf8');
+      });
+      const binaryData = Buffer.from(b64Data, 'base64');
+      fs.writeFileSync(zipPath, binaryData);
+      console.log(`Decoded ${name}.zip from ${files.length} chunks`);
+    } else {
+      console.warn(`Warning: No chunks found for ${name}`);
+    }
   } else {
-    console.warn(`Warning: ${b64Path} not found`);
+    console.warn(`Warning: ${chunksDir} not found`);
   }
 });
